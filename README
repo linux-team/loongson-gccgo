@@ -1,0 +1,79 @@
+This directory contains the GNU Compiler Collection (GCC).
+
+The GNU Compiler Collection is free software.  See the files whose
+names start with COPYING for copying permission.  The manuals, and
+some of the runtime libraries, are under different terms; see the
+individual source files for details.
+
+The directory INSTALL contains copies of the installation information
+as HTML and plain text.  The source of this information is
+gcc/doc/install.texi.  The installation information includes details
+of what is included in the GCC sources and what files GCC installs.
+
+See the file gcc/doc/gcc.texi (together with other files that it
+includes) for usage and porting information.  An online readable
+version of the manual is in the files gcc/doc/gcc.info*.
+
+See http://gcc.gnu.org/bugs/ for how to report bugs usefully.
+
+Copyright years on GCC source files may be listed using range
+notation, e.g., 1987-2012, indicating that every year in the range,
+inclusive, is a copyrightable year that could otherwise be listed
+individually.
+
+注意：
+	如果是mips架构龙芯cpu，使用debian系统，按照如下方法安装gccgo-4.9.1
+
+一.准备工作：
+	在安装gcc-4.9.1之前请先安装 gmp，mpfr，mpc
+	你可以通过如下方式获取源码
+	gmp：
+	git clone https://github.com/embedded-software/loongson-gmp.git
+	mpfr：
+	git clone https://github.com/embedded-software/loongson-mpfr.git
+	mpc：
+	git clone https://github.com/embedded-software/loongson-mpc.git
+
+	安装将上述3个程序安装到/usr后，可以开始编译安装gcc-4.9.1了
+
+二.编译安装gcc-4.9.1
+	1.下载源代码，并进入该源码目录
+	2.配置：
+		./configure --prefix=$(pwd)/_install --enable-languages=c,c++,go --with-system-zlib --enable-threads=posix --enable-shared --enable-long-long --disable-libjava-multilib --disable-ssp --disable-libssp --disable-multilib --disable-checking --without-plugin-ld --enable-coverage=noopt --without-lto --without-plugin-ld --with-abi=32
+	3.创建安装目录：
+		mkdir _install
+	4.编译：
+		make -j 
+	5.安装：
+		make install
+	6.设置环境变量：
+		假如你的gcc的安装路径是 /_install
+    那么环境配置如下:
+    export GCCDIR=/_install
+    export INCLUDE_PATH=$GCCDIR/include:$GCCDIR/include/c++/4.9.1/tr1/
+    export LIBRARY_PATH=$GCCDIR/lib/gcc/mips64el-unknown-linux-gnu/4.9.1:$GCCDIR/lib:$GCCDIR/lib/go/4.9.1/mips64el-unknown-linux-gnu/:$LIBRARY_PATH
+    export LD_LIBRARY_PATH=$GCCDIR/lib:$GCCDIR/lib64:$GCCDIR/lib32:$LD_LIBRARY_PATH
+    export PATH=$GCCDIR/bin:$PATH
+    export MANPATH=$GCCDIR/share/man:$MANPATH
+
+    为了方便,你只需要将你配置时指定的--prefix目录替换掉上述命令中的
+	第一条命令的/_install为你的安装路径，其他命令直接复制使用即可,
+	最好将环境设置命令直接写入~/.bashrc,然后source ~/.bashrc
+
+	到此，支持gccgo的gcc-4.9.1就安装完成
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
